@@ -103,7 +103,7 @@ def resnet_ssd(units, num_stage, filter_list, num_classes, data_type,
     body = resnet(units, num_stage, filter_list, num_classes, data_type, 
                   bn_mom, workspace, memonger, num_channels)    
     
-    graph = mx.viz.plot_network(body.get_internals(), node_attrs={"shape":'rect',"fixedsize":'false'})
+    graph = mx.viz.plot_network(body.get_internals(), save_format='png', node_attrs={"shape":'rect',"fixedsize":'false'})
     graph.render('img/misc/resnet-plain', cleanup=True)
     
     resnet_arguments = body.get_internals().list_outputs()
@@ -118,7 +118,7 @@ def resnet_ssd(units, num_stage, filter_list, num_classes, data_type,
     body = ssd(from_layers, num_classes, sizes, ratios, normalizations, steps, num_channels, 
                nms_thresh, force_suppress, nms_topk)
 
-    graph = mx.viz.plot_network(body, node_attrs={"shape":'rect',"fixedsize":'false'})
+    graph = mx.viz.plot_network(body, save_format='png', node_attrs={"shape":'rect',"fixedsize":'false'})
     graph.render('img/misc/resnet-ssd', cleanup=True)
     
     return body

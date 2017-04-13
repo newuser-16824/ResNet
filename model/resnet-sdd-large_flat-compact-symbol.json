@@ -7,7 +7,7 @@
     }, 
     {
       "op": "null", 
-      "name": "bn_data_gamma", 
+      "name": "xbn_data_gamma", 
       "attr": {
         "eps": "2e-05", 
         "fix_gamma": "True", 
@@ -17,7 +17,7 @@
     }, 
     {
       "op": "null", 
-      "name": "bn_data_beta", 
+      "name": "xbn_data_beta", 
       "attr": {
         "eps": "2e-05", 
         "fix_gamma": "True", 
@@ -27,7 +27,7 @@
     }, 
     {
       "op": "null", 
-      "name": "bn_data_moving_mean", 
+      "name": "xbn_data_moving_mean", 
       "attr": {
         "__init__": "[\"zero\", {}]", 
         "eps": "2e-05", 
@@ -38,7 +38,7 @@
     }, 
     {
       "op": "null", 
-      "name": "bn_data_moving_var", 
+      "name": "xbn_data_moving_var", 
       "attr": {
         "__init__": "[\"one\", {}]", 
         "eps": "2e-05", 
@@ -49,7 +49,7 @@
     }, 
     {
       "op": "BatchNorm", 
-      "name": "bn_data", 
+      "name": "xbn_data", 
       "attr": {
         "eps": "2e-05", 
         "fix_gamma": "True", 
