@@ -59,11 +59,11 @@
     }, 
     {
       "op": "null", 
-      "name": "conv0_weight", 
+      "name": "xconv0_weight", 
       "attr": {
         "kernel": "(7, 7)", 
         "no_bias": "True", 
-        "num_filter": "128", 
+        "num_filter": "64", 
         "pad": "(3, 3)", 
         "stride": "(2, 2)", 
         "workspace": "512"
@@ -72,11 +72,11 @@
     }, 
     {
       "op": "Convolution", 
-      "name": "conv0", 
+      "name": "xconv0", 
       "attr": {
         "kernel": "(7, 7)", 
         "no_bias": "True", 
-        "num_filter": "128", 
+        "num_filter": "64", 
         "pad": "(3, 3)", 
         "stride": "(2, 2)", 
         "workspace": "512"
@@ -146,7 +146,7 @@
       "name": "stage1_unit1_relu1_cls_pred_conv_weight", 
       "attr": {
         "kernel": "(3, 3)", 
-        "num_filter": "66", 
+        "num_filter": "24", 
         "pad": "(1, 1)", 
         "stride": "(1, 1)"
       }, 
@@ -166,7 +166,7 @@
       "name": "stage1_unit1_relu1_cls_pred_conv", 
       "attr": {
         "kernel": "(3, 3)", 
-        "num_filter": "66", 
+        "num_filter": "24", 
         "pad": "(1, 1)", 
         "stride": "(1, 1)"
       }, 
@@ -983,7 +983,7 @@
       "name": "stage2_unit1_relu1_cls_pred_conv_weight", 
       "attr": {
         "kernel": "(3, 3)", 
-        "num_filter": "66", 
+        "num_filter": "24", 
         "pad": "(1, 1)", 
         "stride": "(1, 1)"
       }, 
@@ -1003,7 +1003,7 @@
       "name": "stage2_unit1_relu1_cls_pred_conv", 
       "attr": {
         "kernel": "(3, 3)", 
-        "num_filter": "66", 
+        "num_filter": "24", 
         "pad": "(1, 1)", 
         "stride": "(1, 1)"
       }, 
@@ -1820,7 +1820,7 @@
       "name": "stage3_unit1_relu1_cls_pred_conv_weight", 
       "attr": {
         "kernel": "(3, 3)", 
-        "num_filter": "66", 
+        "num_filter": "24", 
         "pad": "(1, 1)", 
         "stride": "(1, 1)"
       }, 
@@ -1840,7 +1840,7 @@
       "name": "stage3_unit1_relu1_cls_pred_conv", 
       "attr": {
         "kernel": "(3, 3)", 
-        "num_filter": "66", 
+        "num_filter": "24", 
         "pad": "(1, 1)", 
         "stride": "(1, 1)"
       }, 
@@ -2596,7 +2596,7 @@
     }, 
     {
       "op": "null", 
-      "name": "bn1_gamma", 
+      "name": "xbn1_gamma", 
       "attr": {
         "eps": "2e-05", 
         "fix_gamma": "False", 
@@ -2606,7 +2606,7 @@
     }, 
     {
       "op": "null", 
-      "name": "bn1_beta", 
+      "name": "xbn1_beta", 
       "attr": {
         "eps": "2e-05", 
         "fix_gamma": "False", 
@@ -2616,7 +2616,7 @@
     }, 
     {
       "op": "null", 
-      "name": "bn1_moving_mean", 
+      "name": "xbn1_moving_mean", 
       "attr": {
         "__init__": "[\"zero\", {}]", 
         "eps": "2e-05", 
@@ -2627,7 +2627,7 @@
     }, 
     {
       "op": "null", 
-      "name": "bn1_moving_var", 
+      "name": "xbn1_moving_var", 
       "attr": {
         "__init__": "[\"one\", {}]", 
         "eps": "2e-05", 
@@ -2638,7 +2638,7 @@
     }, 
     {
       "op": "BatchNorm", 
-      "name": "bn1", 
+      "name": "xbn1", 
       "attr": {
         "eps": "2e-05", 
         "fix_gamma": "False", 
@@ -2648,16 +2648,16 @@
     }, 
     {
       "op": "Activation", 
-      "name": "output_relu1", 
+      "name": "xrelu1", 
       "attr": {"act_type": "relu"}, 
       "inputs": [[258, 0, 0]]
     }, 
     {
       "op": "null", 
-      "name": "output_relu1_cls_pred_conv_weight", 
+      "name": "xrelu1_cls_pred_conv_weight", 
       "attr": {
         "kernel": "(3, 3)", 
-        "num_filter": "66", 
+        "num_filter": "24", 
         "pad": "(1, 1)", 
         "stride": "(1, 1)"
       }, 
@@ -2665,7 +2665,7 @@
     }, 
     {
       "op": "null", 
-      "name": "output_relu1_cls_pred_conv_bias", 
+      "name": "xrelu1_cls_pred_conv_bias", 
       "attr": {
         "__init__": "[\"constant\", {\"value\": 0.0}]", 
         "__lr_mult__": "2.0"
@@ -2674,10 +2674,10 @@
     }, 
     {
       "op": "Convolution", 
-      "name": "output_relu1_cls_pred_conv", 
+      "name": "xrelu1_cls_pred_conv", 
       "attr": {
         "kernel": "(3, 3)", 
-        "num_filter": "66", 
+        "num_filter": "24", 
         "pad": "(1, 1)", 
         "stride": "(1, 1)"
       }, 
@@ -2706,7 +2706,7 @@
     {
       "op": "Reshape", 
       "name": "reshape0", 
-      "attr": {"shape": "(0, -1, 11)"}, 
+      "attr": {"shape": "(0, -1, 4)"}, 
       "inputs": [[265, 0, 0]]
     }, 
     {
@@ -2765,7 +2765,7 @@
     }, 
     {
       "op": "_contrib_MultiBoxPrior", 
-      "name": "output_relu1_anchors", 
+      "name": "xrelu1_anchors", 
       "attr": {
         "clip": "False", 
         "ratios": "(1.0,2.0,0.5,3.0,0.333333333333)", 
@@ -2952,7 +2952,7 @@
     }, 
     {
       "op": "null", 
-      "name": "output_relu1_loc_pred_conv_weight", 
+      "name": "xrelu1_loc_pred_conv_weight", 
       "attr": {
         "kernel": "(3, 3)", 
         "num_filter": "24", 
@@ -2963,7 +2963,7 @@
     }, 
     {
       "op": "null", 
-      "name": "output_relu1_loc_pred_conv_bias", 
+      "name": "xrelu1_loc_pred_conv_bias", 
       "attr": {
         "__init__": "[\"constant\", {\"value\": 0.0}]", 
         "__lr_mult__": "2.0"
@@ -2972,7 +2972,7 @@
     }, 
     {
       "op": "Convolution", 
-      "name": "output_relu1_loc_pred_conv", 
+      "name": "xrelu1_loc_pred_conv", 
       "attr": {
         "kernel": "(3, 3)", 
         "num_filter": "24", 
