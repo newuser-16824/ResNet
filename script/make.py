@@ -6,7 +6,7 @@ import os
 import mxnet as mx
 import numpy as np
 
-from symbol.symbol_resnet_ssd import resnet_ssd
+from xsymbol.symbol_resnet_ssd import resnet_ssd
 
 import pdb
 
@@ -26,7 +26,7 @@ def parse_arguments():
     parser.add_argument('--type',           type=str,   default='large_flat', 
                         #choices=['[small\', \'medium\', \'large\']_[flat\', \'belly\', \'ramp\']'],
                         help='the type of resnet')
-    parser.add_argument('--num-classes',    type=int,   default=1, 
+    parser.add_argument('--num-classes',    type=int,   default=3, 
                         help='the class number of your task')
     parser.add_argument('--bn-mom',         type=float, default=0.9, 
                         help='momentum for batch normlization')

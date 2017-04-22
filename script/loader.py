@@ -23,13 +23,17 @@ HEIGHT_FOLDER = 'height'
 DENSITY_FOLDER = 'density'
 INTENSITY_FOLDER = 'intensity'
 
+TOPVIEW_RESOLUTION = 0.1
+TOPVIEW_DIM        = 300.
+TOPVIEW_HALFDIM    = (TOPVIEW_DIM / 2.)
+
 class Loader(mx.io.DataIter):
     def __init__(self, root, batch_size, dims, targets):
         super(Loader, self).__init__(self)
         self.root       = root
         self.batch_size = batch_size
         self.dims       = dims
-        self.targets    = (10, targets)
+        self.targets    = (100, targets)
 
         drives = [drv for drv in os.listdir(self.root)
                     if 'drive' in drv]
@@ -88,15 +92,41 @@ class Loader(mx.io.DataIter):
 
             #print tracklet_dict
 
-            #height_mat = cv.cv.Load(height_file)
+            height_img    = np.asarray(np.load(height_file),    dtype=np.float32) / 255.
+            density_img   = np.asarray(np.load(density_file),   dtype=np.float32) / 255.
+            intensity_img = np.asarray(np.load(intensity_file), dtype=np.float32) / 255.
 
-            #print height_mat
+            topview_img   = np.concatenate((height_img, density_img, intensity_img), axis=2)
 
-            pdb.set_trace()
+            topview_img   = np.asarray([np.rollaxis(topview_img, 2)])
 
+            self.data[0][idx,:,:,:] = topview_img.copy()
 
+            key     = int(scan.split('.')[0])
+            targets = tracklet_dict.setdefault(key, list())
 
+            labels = []
 
+            for target in targets:
+                c = int(target[0])
+
+                target_x = target[1][0,:]
+                target_y = target[1][1,:]
+
+                w  = np.ptp(target_x)  / TOPVIEW_RESOLUTION
+                xo = TOPVIEW_DIM - (np.mean(target_x) / TOPVIEW_RESOLUTION + TOPVIEW_HALFDIM)
+                h  = np.ptp(target_y)  / TOPVIEW_RESOLUTION
+                yo = TOPVIEW_DIM - (np.mean(target_y) / TOPVIEW_RESOLUTION + TOPVIEW_HALFDIM)
+
+                tl = (xo-w/2., yo-h/2.)
+                br = (xo+w/2., yo+h/2.)
+
+                if (tl[0] < 0) or (tl[1] < 0) or (br[0] >= TOPVIEW_DIM) or (br[1] >= TOPVIEW_DIM):
+                    continue
+
+                labels += [[c, xo, yo, w, h]]
+
+            #self.labels[0] += labels
 
         if self.index > len(self.samples):
             return StopIteration
@@ -107,6 +137,8 @@ class Loader(mx.io.DataIter):
                                 index=self.getindex(),
                                 provide_data=self.provide_data,
                                 provide_label=self.provide_label)
+
+        print 'yooooooh, returning batch'
 
         return batch
 

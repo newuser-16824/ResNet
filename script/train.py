@@ -53,10 +53,13 @@ def main(args):
     val_label   = np.random.randn(val_points,   label_chans, label_dims)
 
     '''
-    train_iter  = mx.io.NDArrayIter(train_data, train_label, batch_size, 
-                            data_name='data', label_name='label', shuffle=True)
-    val_iter    = mx.io.NDArrayIter(val_data,   val_label,   batch_size, 
-                            data_name='data', label_name='label')
+    train_iter1 = Loader(root, batch_size, 
+                         (data_chans, data_dims, data_dims),
+                         label_dims)
+    train_iter2 = Loader(root, batch_size, 
+                         (data_chans, data_dims, data_dims),
+                         label_dims)
+    train_iter = mx.io.PrefetchingIter([train_iter1, train_iter2])
     '''
 
     train_iter  = Loader(root, batch_size, 
