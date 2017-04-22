@@ -26,7 +26,7 @@ def parse_arguments():
     parser.add_argument('--type',           type=str,   default='large_flat', 
                         #choices=['[small\', \'medium\', \'large\']_[flat\', \'belly\', \'ramp\']'],
                         help='the type of resnet')
-    parser.add_argument('--num-classes',    type=int,   default=3, 
+    parser.add_argument('--num-classes',    type=int,   default=1, 
                         help='the class number of your task')
     parser.add_argument('--bn-mom',         type=float, default=0.9, 
                         help='momentum for batch normlization')
@@ -47,7 +47,7 @@ def main(args):
     unit_list       = [3, 3, 3] if 'flat'  in args.type else \
                       [3, 4, 3] if 'belly' in args.type else \
                       [3, 4, 5] if 'ramp'  in args.type else None
-    channels        =  32 if 'expanded' in args.data_type else \
+    channels        =  8 if 'expanded' in args.data_type else \
                        3 if 'compact'  in args.data_type else None
     dimensions      = 300
     sizes           = [

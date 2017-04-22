@@ -3,6 +3,7 @@ import mxnet as mx
 import numpy as np
 
 from metric import MultiBoxMetric
+from loader import Loader
 
 import argparse
 import logging
@@ -33,9 +34,11 @@ def parse_arguments():
 
 def main(args):
 
+    root = '/data0/datasets/KITTI/dataset/'
+
     logging.info('Loading data...')
     #--- LOADING DATA --------------------------------------------------------#
-    data_chans   = 32 if 'expanded' in args.data_type else \
+    data_chans   = 8 if 'expanded' in args.data_type else \
                    3 if 'compact'  in args.data_type else None
     data_dims    = 300
     label_chans  = 100
@@ -49,10 +52,20 @@ def main(args):
     val_data    = np.random.randn(val_points,   data_chans,  data_dims, data_dims)
     val_label   = np.random.randn(val_points,   label_chans, label_dims)
 
+    '''
     train_iter  = mx.io.NDArrayIter(train_data, train_label, batch_size, 
                             data_name='data', label_name='label', shuffle=True)
     val_iter    = mx.io.NDArrayIter(val_data,   val_label,   batch_size, 
                             data_name='data', label_name='label')
+    '''
+
+    train_iter  = Loader(root, batch_size, 
+                         (data_chans, data_dims, data_dims),
+                         label_dims)
+
+    val_iter    = Loader(root, batch_size, 
+                         (data_chans, data_dims, data_dims),
+                         label_dims)
     #-------------------------------------------------------------------------#
     
     logging.info('Loading model...')
